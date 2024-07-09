@@ -1,3 +1,9 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+
 import classnames from "classnames";
 
 import { usePagination, DOTS } from "../custom-hooks/usePagination";
@@ -54,25 +60,33 @@ export const Pagination = ({
         })}
         onClick={onPrevious}
       >
-        <div className="arrow left" />
+        <FontAwesomeIcon icon={faChevronLeft} />
       </li>
 
       {paginationRange.map((pageNumber) => {
         if (pageNumber === DOTS) {
-          return <li className="pagination-item dots">&#8230</li>;
+          return <li className="pagination-item dots">&#8230;</li>;
         }
 
         return (
           <li
             className={classnames("pagination-item", {
-              disabled: currentPage === lastPage,
+              selected: pageNumber === currentPage,
             })}
-            onClick={onNext}
+            onClick={() => onPageChange(pageNumber)}
           >
-            <div className="arrow right"></div>
+            {pageNumber}
           </li>
         );
       })}
+      <li
+        className={classnames("pagination-item", {
+          disabled: currentPage === lastPage,
+        })}
+        onClick={onNext}
+      >
+        <FontAwesomeIcon icon={faChevronRight} />
+      </li>
     </ul>
   );
 };
